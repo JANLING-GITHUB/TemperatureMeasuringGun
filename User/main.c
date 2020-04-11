@@ -180,7 +180,7 @@ int main(void)
 								//故，锂电池的电压 VBAT = VoltageValue*（10 K + 10K）/10K
 
 								VBAT = VoltageValue*(10 + 10)/10;
-								
+														
 								sprintf(VoltageValueStr,"%.2f", VBAT);     //浮点型转换成字符串
 								//由于板子在电压采集的电路中加入了电阻所以加1.2V
 								sprintf(VoltageValueStr,"%.2f", (VoltageValue + 1.20));     //浮点型转换成字符串
