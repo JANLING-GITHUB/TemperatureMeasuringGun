@@ -64,7 +64,7 @@ int main(void)
 	  
 	while(1)
 	{
-
+		
 		if(Key_IsAnyButtonPress(&keyType) == KEY_ON)    //°´¼üÉ¨Ãè
 		{
 		
