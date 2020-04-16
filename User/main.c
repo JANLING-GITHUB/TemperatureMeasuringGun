@@ -19,6 +19,8 @@
 #include "include.h"
 #include <stdio.h>
 #include "bmp.h"
+#include <string.h>
+
 
 //温度的单位 ℃
 uint8_t TempCompany[][16]=
@@ -165,15 +167,19 @@ int main(void)
 					
 						if(CollectionFlag != 0)
 						{	
+								extern uint16_t ADC_ConvertedValue[50];
+								extern ADC_HandleTypeDef ADC_Handle;
+							
 								//进入该模式，只清一次屏
 								if(VolCleanScreenFlag == 0)
 								{
 									OLED_DataClear() ;      //清除数据行的屏幕信息
+																																				
 									OLED_ShowChar(80,2,'V',16);
 									VolCleanScreenFlag++;
 									
 								}
-								
+								HAL_ADC_Start_DMA(&ADC_Handle, (uint32_t*)ADC_ConvertedValue, 50);
 								
 								VoltageValue = Get_VoltageValue();
 								//由于板子在电压采集的电路中加入了电阻，所以在串联电路中，电阻起到的作用是:分压
@@ -200,6 +206,13 @@ int main(void)
 										 }
 								}
 								
+								HAL_ADC_Stop_DMA(&ADC_Handle);
+//								HAL_Delay(1000);
+								memset(ADC_ConvertedValue,0,sizeof(ADC_ConvertedValue));
+//								for (i=0; i<50; i++)
+//								{
+//									  	printf("stoped dma adc[%d] %d  ",i,ADC_ConvertedValue[i]);
+//								}
 								TempCleanScreenFlag = 0;    //清除温度显示的标志
 						}
 				break;
